@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 namespace PlayerCode.BaseCode {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PlayerInput))]
-    public abstract class BasePlayerMovement : MonoBehaviour {
+    public abstract class BasePlayerController : MonoBehaviour {
         #region Variables
 
         //default values that can be changed later
@@ -15,7 +15,9 @@ namespace PlayerCode.BaseCode {
         //stores the player inputs into variables
         private Vector2 _moveInput;
         private bool _jumpButtonDown;
+        private bool _attackKeyDown;
 
+        private bool _hasPunched;
         //references
         protected Rigidbody rb;
 
@@ -72,7 +74,9 @@ namespace PlayerCode.BaseCode {
 
         #region Combat Methods
 
-        private void CombatManager() { }
+        private void CombatManager() {
+            
+        }
 
         protected virtual void LightAttack() { }
 
@@ -93,9 +97,9 @@ namespace PlayerCode.BaseCode {
         #endregion
 
         #region Check Methods
-
         protected bool isGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, groundMask);
 
+        protected bool shouldPunch => !_hasPunched;
         #endregion
     }
 }
